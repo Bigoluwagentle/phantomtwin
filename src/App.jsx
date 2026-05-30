@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Landing from './pages/Landing'
 import Analyze from './pages/Analyze'
+import Dashboard from './pages/Dashboard/index'
 import './styles/global.css'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/analyze/:sessionId" element={<Analyze />} />
         <Route path="/analyze" element={<Landing />} />
+        <Route path="/dashboard/:sessionId" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   )
