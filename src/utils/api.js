@@ -28,3 +28,4 @@ export const redesignWebsite = async (sessionId, style) => {
 }
 
 export default api
+// sharp
