@@ -204,3 +204,20 @@ input {
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+
+
+@media (min-width: 768px) {
+  .desktop-links {
+    display: flex !important;
+  }
+  .hamburger {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-cta {
+    display: none !important;
+  }
+}
