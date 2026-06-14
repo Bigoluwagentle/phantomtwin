@@ -21,7 +21,7 @@ export default function App() {
         }}
       />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/analyze" element={<Landing scrollToInput={true} />} />
         <Route path="/analyze/:sessionId" element={<Analyze />} />
         <Route path="/analyze" element={<Landing />} />
         <Route path="/dashboard/:sessionId" element={<Dashboard />} />

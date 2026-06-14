@@ -45,10 +45,22 @@ const steps = [
   { number: '04', title: 'Export the clone', description: 'Download the recreated React components and design tokens, ready to use.' }
 ]
 
-export default function Landing() {
+import { useRef } from 'react'
+
+export default function Landing({ scrollToInput }) {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (scrollToInput && inputRef.current) {
+      setTimeout(() => {
+        inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        inputRef.current.focus()
+      }, 100)
+    }
+  }, [scrollToInput])
 
   const handleAnalyze = async () => {
     if (!url.trim()) {
@@ -129,69 +141,72 @@ export default function Landing() {
         </p>
 
         {/* URL Input */}
-        <div style={{
-          width: '100%',
-          maxWidth: '600px',
-          display: 'flex',
-          gap: '12px',
-          marginBottom: '20px',
-          animation: 'fadeInUp 0.6s ease 0.3s both',
-          flexWrap: 'wrap'
-        }}>
+        <div id="analyze-section" style={{ width: '100%' }}>
           <div style={{
-            flex: 1,
-            minWidth: '280px',
+            width: '100%',
+            maxWidth: '600px',
             display: 'flex',
-            alignItems: 'center',
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-primary)',
-            borderRadius: 'var(--radius-md)',
-            padding: '0 16px',
-            gap: '10px',
-            boxShadow: '0 0 30px var(--accent-glow)'
+            gap: '12px',
+            marginBottom: '20px',
+            animation: 'fadeInUp 0.6s ease 0.3s both',
+            flexWrap: 'wrap'
           }}>
-            <span style={{ color: 'var(--text-muted)', fontSize: '14px', fontFamily: 'var(--font-mono)' }}>
-              https://
-            </span>
-            <input
-              type="text"
-              placeholder="stripe.com"
-              value={url}
-              onChange={e => setUrl(e.target.value)}
-              onKeyDown={handleKeyDown}
+            <div style={{
+              flex: 1,
+              minWidth: '280px',
+              display: 'flex',
+              alignItems: 'center',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-primary)',
+              borderRadius: 'var(--radius-md)',
+              padding: '0 16px',
+              gap: '10px',
+              boxShadow: '0 0 30px var(--accent-glow)'
+            }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '14px', fontFamily: 'var(--font-mono)' }}>
+                https://
+              </span>
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="stripe.com"
+                value={url}
+                onChange={e => setUrl(e.target.value)}
+                onKeyDown={handleKeyDown}
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-primary)',
+                  fontSize: '16px',
+                  padding: '16px 0',
+                  fontFamily: 'var(--font-mono)'
+                }}
+              />
+            </div>
+            <button
+              className="btn-primary"
+              onClick={handleAnalyze}
+              disabled={loading}
               style={{
-                flex: 1,
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--text-primary)',
-                fontSize: '16px',
-                padding: '16px 0',
-                fontFamily: 'var(--font-mono)'
+                padding: '16px 28px',
+                fontSize: '15px',
+                opacity: loading ? 0.7 : 1,
+                whiteSpace: 'nowrap'
               }}
-            />
+            >
+              {loading ? 'Starting...' : 'Analyze →'}
+            </button>
           </div>
-          <button
-            className="btn-primary"
-            onClick={handleAnalyze}
-            disabled={loading}
-            style={{
-              padding: '16px 28px',
-              fontSize: '15px',
-              opacity: loading ? 0.7 : 1,
-              whiteSpace: 'nowrap'
-            }}
-          >
-            {loading ? 'Starting...' : 'Analyze →'}
-          </button>
-        </div>
 
-        <p style={{
-          fontSize: '13px',
-          color: 'var(--text-muted)',
-          animation: 'fadeInUp 0.6s ease 0.4s both'
-        }}>
-          Try: stripe.com • notion.so • linear.app • vercel.com
-        </p>
+          <p style={{
+            fontSize: '13px',
+            color: 'var(--text-muted)',
+            animation: 'fadeInUp 0.6s ease 0.4s both'
+          }}>
+            Try: stripe.com • notion.so • linear.app • vercel.com
+          </p>
+        </div>
 
         {/* Hero visual */}
         <div style={{
@@ -402,8 +417,20 @@ export default function Landing() {
             }}>
               Paste any URL and get a full AI analysis, design system breakdown, and React code in seconds.
             </p>
-            <button className="btn-primary" style={{ padding: '18px 40px', fontSize: '17px' }}
-              onClick={() => navigate('/analyze')}>
+            <button
+              className="btn-primary"
+              style={{ padding: '18px 40px', fontSize: '17px' }}
+              onClick={() => {
+                const el = document.getElementById('analyze-section')
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                  const input = el.querySelector('input')
+                  if (input) input.focus()
+                } else {
+                  navigate('/#analyze-section')
+                }
+              }}
+            >
               Start analyzing for free →
             </button>
           </div>

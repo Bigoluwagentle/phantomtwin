@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const linkStyle = {
   color: '#8888aa',
@@ -38,6 +39,31 @@ export default function Navbar() {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleTryFree = () => {
+    if (location.pathname === '/') {
+      const el = document.getElementById('analyze-section')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        const input = el.querySelector('input')
+        if (input) input.focus()
+      }
+    } else {
+      navigate('/')
+      setTimeout(() => {
+        const el = document.getElementById('analyze-section')
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          const input = el.querySelector('input')
+          if (input) input.focus()
+        }
+      }, 300)
+    }
+    setMenuOpen(false)
+  }
 
   return (
     <nav
