@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const linkStyle = {
   color: '#8888aa',
@@ -11,23 +10,12 @@ const linkStyle = {
   display: 'block'
 }
 
-const btnStyle = {
-  width: '100%',
-  padding: '14px',
-  background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
-  color: 'white',
-  border: 'none',
-  borderRadius: '12px',
-  fontWeight: '600',
-  fontSize: '15px',
-  cursor: 'pointer',
-  fontFamily: 'Inter, sans-serif'
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -40,10 +28,8 @@ export default function Navbar() {
     }
   }, [])
 
-  const navigate = useNavigate()
-  const location = useLocation()
-
   const handleTryFree = () => {
+    setMenuOpen(false)
     if (location.pathname === '/') {
       const el = document.getElementById('analyze-section')
       if (el) {
@@ -62,7 +48,6 @@ export default function Navbar() {
         }
       }, 300)
     }
-    setMenuOpen(false)
   }
 
   return (
@@ -82,13 +67,11 @@ export default function Navbar() {
         transition: 'all 0.3s ease'
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
         <Link
           to="/"
           style={{
@@ -98,34 +81,30 @@ export default function Navbar() {
             textDecoration: 'none'
           }}
         >
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '16px',
-              fontWeight: '700',
-              color: 'white',
-              flexShrink: 0
-            }}
-          >
+          <div style={{
+            width: '32px',
+            height: '32px',
+            background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '16px',
+            fontWeight: '700',
+            color: 'white',
+            flexShrink: 0
+          }}>
             P
           </div>
-          <span
-            style={{
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontWeight: '700',
-              fontSize: '18px',
-              background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}
-          >
+          <span style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontWeight: '700',
+            fontSize: '18px',
+            background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>
             PhantomTwin
           </span>
         </Link>
@@ -146,22 +125,21 @@ export default function Navbar() {
           )}
 
           {!isMobile && (
-            <Link to="/analyze" style={{ textDecoration: 'none' }}>
-              <button
-                style={{
-                  padding: '10px 20px',
-                  fontSize: '14px',
-                  background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontWeight: '600',
-                  cursor: 'pointer'
-                }}
-              >
-                Try it free
-              </button>
-            </Link>
+            <button
+              onClick={handleTryFree}
+              style={{
+                padding: '10px 20px',
+                fontSize: '14px',
+                background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              Try it free
+            </button>
           )}
 
           {isMobile && (
@@ -182,53 +160,45 @@ export default function Navbar() {
                 height: '40px'
               }}
             >
-              <div
-                style={{
-                  width: '18px',
-                  height: '2px',
-                  background: '#f0f0ff',
-                  borderRadius: '2px',
-                  transition: 'all 0.3s ease',
-                  transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
-                }}
-              />
-              <div
-                style={{
-                  width: '18px',
-                  height: '2px',
-                  background: '#f0f0ff',
-                  borderRadius: '2px',
-                  transition: 'all 0.3s ease',
-                  opacity: menuOpen ? 0 : 1
-                }}
-              />
-              <div
-                style={{
-                  width: '18px',
-                  height: '2px',
-                  background: '#f0f0ff',
-                  borderRadius: '2px',
-                  transition: 'all 0.3s ease',
-                  transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none'
-                }}
-              />
+              <div style={{
+                width: '18px',
+                height: '2px',
+                background: '#f0f0ff',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
+              }} />
+              <div style={{
+                width: '18px',
+                height: '2px',
+                background: '#f0f0ff',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                opacity: menuOpen ? 0 : 1
+              }} />
+              <div style={{
+                width: '18px',
+                height: '2px',
+                background: '#f0f0ff',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none'
+              }} />
             </button>
           )}
         </div>
       </div>
 
       {isMobile && menuOpen && (
-        <div
-          style={{
-            paddingTop: '20px',
-            paddingBottom: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            borderTop: '1px solid rgba(108,99,255,0.15)',
-            marginTop: '16px'
-          }}
-        >
+        <div style={{
+          paddingTop: '20px',
+          paddingBottom: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '4px',
+          borderTop: '1px solid rgba(108,99,255,0.15)',
+          marginTop: '16px'
+        }}>
           <a href="#features" onClick={() => setMenuOpen(false)} style={linkStyle}>
             Features
           </a>
@@ -238,15 +208,24 @@ export default function Navbar() {
           <a href="#examples" onClick={() => setMenuOpen(false)} style={linkStyle}>
             Examples
           </a>
-          <Link
-            to="/analyze"
-            onClick={() => setMenuOpen(false)}
-            style={{ textDecoration: 'none', marginTop: '8px' }}
+          <button
+            onClick={handleTryFree}
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(135deg, #6c63ff, #00d4ff)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '12px',
+              fontWeight: '600',
+              fontSize: '15px',
+              cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif',
+              marginTop: '8px'
+            }}
           >
-            <button style={btnStyle}>
-              Try it free
-            </button>
-          </Link>
+            Try it free
+          </button>
         </div>
       )}
     </nav>
