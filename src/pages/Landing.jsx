@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/ui/Navbar'
 import ParticleBackground from '../components/ui/ParticleBackground'
@@ -44,8 +44,6 @@ const steps = [
   { number: '03', title: 'Get deep insights', description: 'Receive a full breakdown of design strategy, UX decisions, and conversion techniques.' },
   { number: '04', title: 'Export the clone', description: 'Download the recreated React components and design tokens, ready to use.' }
 ]
-
-import { useRef } from 'react'
 
 export default function Landing({ scrollToInput }) {
   const [url, setUrl] = useState('')
